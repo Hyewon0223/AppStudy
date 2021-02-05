@@ -1,22 +1,49 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {SafeAreaView, StyleSheet, TextInput, View, Text, ScrollView} from 'react-native';
+import TodoInsert from "./Tutorial/components/TodoInsert";
+import TodoList from "./Tutorial/components/TodoList";
 
-export default function App() {
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>혜원</Text>
-      <Text>Hello, World!</Text>
-      <StatusBar style="auto" />
-    </View>
+      <SafeAreaView style={styles.container}>
+        <Text style={styles.appTitle}>Hello Todolist</Text>
+        <View style={styles.card}>
+          <TodoInsert/>
+          <TodoList/>
+        </View>
+      </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#3143e8',
+  },
+  appTitle: {
+    color: '#fff',
+    fontSize: 36,
+    marginTop: 30,
+    marginBottom: 30,
+    fontWeight: '300',
+    textAlign: 'center',
+    backgroundColor: '#3143e8',
+  },
+  card: {
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flex: 1,
+    borderTopLeftRadius: 10, // to provide rounded corners
+    borderTopRightRadius: 10, // to provide rounded corners
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  input: {
+    padding: 20,
+    borderBottomColor: '#bbb',
+    borderBottomWidth: 1,
+    fontSize: 24,
+    marginLeft: 20,
   },
 });
+
+export default App;
