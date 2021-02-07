@@ -5,6 +5,8 @@ import Icon from 'react-native-vector-icons/AntDesign';
 const TodoListItem = ({textValue, id, checked, onRemove, onToggle}) => {
     return (
         <View style={styles.container}>
+            {/* <TouchableOpacity> : 터치 이벤트를 사용할 수 있는 View */}
+            {/* <Button>은 각 플랫폼에 따라 네이티브 버튼이 다르기 때문에 UI 조절이 제한적이고 일관성이 없게 됨*/}
             <TouchableOpacity onPressOut={onToggle(id)}>
                 {checked ? (
                     <View style={styles.completeCircle}>
@@ -20,6 +22,7 @@ const TodoListItem = ({textValue, id, checked, onRemove, onToggle}) => {
                     checked ? styles.strikeText : styles.unstrikeText,
                 ]}>
                 {textValue}
+            {/* 입력창에 텍스트를 입력해 ADD버튼을 눌러 추가하면 리스트에 아이템이 추가됨 */}
             </Text>
             <View style={styles.buttons}>
                 <TouchableOpacity style={styles.buttonContainer}>

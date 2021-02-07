@@ -8,7 +8,7 @@ const TodoList = ({todos, onRemove, onToggle}) => {
             {todos.map(todo => (
                 <TodoListItem
                     key={todo.id}
-                    {...todo}
+                    {...todo} // todos에 담긴 아이템을 하나씩 TodoListItem으로 전달
                     onRemove={onRemove}
                     onToggle={onToggle}
                 />
