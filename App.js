@@ -1,9 +1,9 @@
 import React from 'react';
-import ToDoList from "./ToDoList/ToDoList";
+import TicTacToe from "./TicTacToe/TicTacToe";
 
 const App = () => {
     return (
-        <ToDoList/>
+        <TicTacToe/>
     );
 };
 
