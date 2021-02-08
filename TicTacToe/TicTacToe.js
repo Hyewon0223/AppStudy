@@ -1,11 +1,18 @@
 import React, {useState} from 'react';
 import {SafeAreaView, StyleSheet, View, Text, Button} from 'react-native';
 import {Condition} from "./Condition";
+import AppLoading from 'expo-app-loading';
+import {useFonts} from 'expo-font';
+
 const value = [0,0,0,0,0,0,0,0,0];
 const choose_X = [0,0,0,0,0,0,0,0,0];
 const choose_O = [0,0,0,0,0,0,0,0,0];
 
 export const TicTacToe = (props) => {
+    let fontsLoaded = useFonts({
+        'Gaegu-Bold' : require('../assets/fonts/Gaegu-Bold.ttf'),
+    });
+
     let result = '';
     let finish = false;
 
@@ -94,12 +101,14 @@ export const TicTacToe = (props) => {
             gameOver: false,
         })
     }
-
+    if (!fontsLoaded){
+        return <AppLoading/>
+    }
     return <>
         <SafeAreaView>
-            <Text>{user.player}</Text>
-            <View>
-                <View>
+            <Text style={styles.state}>{user.player}</Text>
+            <View style={styles.board}>
+                <View style={styles.line}>
                     <Button title={value[0]===0? '': value[0]===1? 'X':'O'} onPress={() => {btnClick(0)}}/>
                     <Button title={value[1]===0? '': value[1]===1? 'X':'O'} onPress={() => {btnClick(1)}}/>
                     <Button title={value[2]===0? '': value[2]===1? 'X':'O'} onPress={() => {btnClick(2)}}/>
@@ -120,4 +129,49 @@ export const TicTacToe = (props) => {
     </>
 }
 
+const styles = StyleSheet.create({
+    state: {
+        marginTop : 30,
+        textAlign: 'center',
+        fontSize : 30,
+        fontFamily : 'Gaegu-Bold',
+    },
+    board: {
+
+    },
+    line: {
+        flex: 5,
+        fontWeight: '500',
+        fontSize: 18,
+        marginVertical: 20,
+        width: 100,
+    },
+    circle: {
+        width: 30,
+        height: 30,
+        borderRadius: 15,
+        borderColor: 'blue',
+        borderWidth: 2,
+        marginRight: 20,
+        marginLeft: 20,
+    },
+    completeCircle: {
+        marginRight: 20,
+        marginLeft: 20,
+    },
+    strikeText: {
+        color: '#bbb',
+        textDecorationLine: 'line-through',
+    },
+    unstrikeText: {
+        color: '#29323c',
+    },
+    buttons: {
+        flexDirection: 'row',
+    },
+    buttonContainer: {
+        marginVertical: 10,
+        marginHorizontal: 10,
+    },
+});
 export default TicTacToe;
