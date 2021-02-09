@@ -101,30 +101,32 @@ export const TicTacToe = (props) => {
             gameOver: false,
         })
     }
+
     if (!fontsLoaded){
         return <AppLoading/>
     }
+
     return <>
         <SafeAreaView>
             <Text style={styles.state}>{user.player}</Text>
             <View style={styles.board}>
                 <View style={styles.line}>
-                    <Button title={value[0]===0? '': value[0]===1? 'X':'O'} onPress={() => {btnClick(0)}}/>
-                    <Button title={value[1]===0? '': value[1]===1? 'X':'O'} onPress={() => {btnClick(1)}}/>
-                    <Button title={value[2]===0? '': value[2]===1? 'X':'O'} onPress={() => {btnClick(2)}}/>
+                    <Button style={styles.tile} title={value[0]===0? '': value[0]===1? 'X':'O'} onPress={() => {btnClick(0)}}/>
+                    <Button style={styles.tile} title={value[1]===0? '': value[1]===1? 'X':'O'} onPress={() => {btnClick(1)}}/>
+                    <Button style={styles.tile} title={value[2]===0? '': value[2]===1? 'X':'O'} onPress={() => {btnClick(2)}}/>
                 </View>
                 <View>
-                    <Button title={value[3]===0? '': value[3]===1? 'X':'O'} onPress={() => {btnClick(3)}}/>
-                    <Button title={value[4]===0? '': value[4]===1? 'X':'O'} onPress={() => {btnClick(4)}}/>
-                    <Button title={value[5]===0? '': value[5]===1? 'X':'O'} onPress={() => {btnClick(5)}}/>
+                    <Button style={styles.tile} title={value[3]===0? '': value[3]===1? 'X':'O'} onPress={() => {btnClick(3)}}/>
+                    <Button style={styles.tile} title={value[4]===0? '': value[4]===1? 'X':'O'} onPress={() => {btnClick(4)}}/>
+                    <Button style={styles.tile} title={value[5]===0? '': value[5]===1? 'X':'O'} onPress={() => {btnClick(5)}}/>
                 </View>
                 <View>
-                    <Button title={value[6]===0? '': value[6]===1? 'X':'O'} onPress={() => {btnClick(6)}}/>
-                    <Button title={value[7]===0? '': value[7]===1? 'X':'O'} onPress={() => {btnClick(7)}}/>
-                    <Button title={value[8]===0? '': value[8]===1? 'X':'O'} onPress={() => {btnClick(8)}}/>
+                    <Button style={styles.tile} title={value[6]===0? '': value[6]===1? 'X':'O'} onPress={() => {btnClick(6)}}/>
+                    <Button style={styles.tile} title={value[7]===0? '': value[7]===1? 'X':'O'} onPress={() => {btnClick(7)}}/>
+                    <Button style={styles.tile} title={value[8]===0? '': value[8]===1? 'X':'O'} onPress={() => {btnClick(8)}}/>
                 </View>
             </View>
-            <Button title={"RESET"} onPress={btnReset}/>
+            <Button style={styles.resetBtn} title={"RESET"} onPress={btnReset}/>
         </SafeAreaView>
     </>
 }
@@ -137,41 +139,24 @@ const styles = StyleSheet.create({
         fontFamily : 'Gaegu-Bold',
     },
     board: {
-
+        marginTop : 30,
+        marginLeft : 'auto',
+        marginRight : 'auto',
+        borderWidth : 1,
+        borderColor: 'black'
     },
-    line: {
-        flex: 5,
-        fontWeight: '500',
-        fontSize: 18,
-        marginVertical: 20,
-        width: 100,
+    tile: {
+        fontFamily : 'Gaegu-Bold',
+        color : 'black',
+        width : 30,
+        height : 30,
+        borderWidth : 1,
+        borderColor : 'black',
     },
-    circle: {
-        width: 30,
-        height: 30,
-        borderRadius: 15,
-        borderColor: 'blue',
-        borderWidth: 2,
-        marginRight: 20,
-        marginLeft: 20,
-    },
-    completeCircle: {
-        marginRight: 20,
-        marginLeft: 20,
-    },
-    strikeText: {
-        color: '#bbb',
-        textDecorationLine: 'line-through',
-    },
-    unstrikeText: {
-        color: '#29323c',
-    },
-    buttons: {
-        flexDirection: 'row',
-    },
-    buttonContainer: {
-        marginVertical: 10,
-        marginHorizontal: 10,
-    },
+    resetBtn : {
+        marginTop : 20,
+        fontSize : 20,
+        fontFamily: 'Gaegu-Bold',
+    }
 });
 export default TicTacToe;
