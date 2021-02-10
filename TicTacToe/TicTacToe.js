@@ -145,14 +145,6 @@ const styles = StyleSheet.create({
         borderWidth : 1,
         borderColor: 'black'
     },
-    tile: {
-        fontFamily : 'Gaegu-Bold',
-        color : 'black',
-        width : 30,
-        height : 30,
-        borderWidth : 1,
-        borderColor : 'black',
-    },
     resetBtn : {
         marginTop : 20,
         fontSize : 20,
