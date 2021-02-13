@@ -3,6 +3,7 @@ import {SafeAreaView, StyleSheet, View, Text, Button} from 'react-native';
 import {Condition} from "./Condition";
 import AppLoading from 'expo-app-loading';
 import {useFonts} from 'expo-font';
+import {Row, Rows, Table} from "react-native-table-component";
 
 const value = [0,0,0,0,0,0,0,0,0];
 const choose_X = [0,0,0,0,0,0,0,0,0];
@@ -15,6 +16,24 @@ export const TicTacToe = (props) => {
 
     let result = '';
     let finish = false;
+
+    const makeBtn = (idx) => {
+        return <Button style={styles.tile} title={value[idx]===0? '': value[idx]===1? 'X':'O'} onPress={() => {btnClick(idx)}}/>
+    }
+
+    const state = {
+        tableData : [
+            [<Button style={styles.tile} title={value[0]===0? '': value[0]===1? 'X':'O'} onPress={() => {btnClick(0)}}/>,
+                <Button style={styles.tile} title={value[1]===0? '': value[1]===1? 'X':'O'} onPress={() => {btnClick(1)}}/>,
+                    <Button style={styles.tile} title={value[2]===0? '': value[2]===1? 'X':'O'} onPress={() => {btnClick(2)}}/>],
+            [<Button style={styles.tile} title={value[3]===0? '': value[3]===1? 'X':'O'} onPress={() => {btnClick(3)}}/>,
+                <Button style={styles.tile} title={value[4]===0? '': value[4]===1? 'X':'O'} onPress={() => {btnClick(4)}}/>,
+                    <Button style={styles.tile} title={value[5]===0? '': value[5]===1? 'X':'O'} onPress={() => {btnClick(5)}}/>],
+            [<Button style={styles.tile} title={value[6]===0? '': value[6]===1? 'X':'O'} onPress={() => {btnClick(6)}}/>,
+                <Button style={styles.tile} title={value[7]===0? '': value[7]===1? 'X':'O'} onPress={() => {btnClick(7)}}/>,
+                    <Button style={styles.tile} title={value[8]===0? '': value[8]===1? 'X':'O'} onPress={() => {btnClick(8)}}/>],
+        ]
+    }
 
     const [user, setUser] = useState({
         player : '다음은 X의 차례입니다',
@@ -110,21 +129,9 @@ export const TicTacToe = (props) => {
         <SafeAreaView>
             <Text style={styles.state}>{user.player}</Text>
             <View style={styles.board}>
-                <View style={styles.line}>
-                    <Button style={styles.tile} title={value[0]===0? '': value[0]===1? 'X':'O'} onPress={() => {btnClick(0)}}/>
-                    <Button style={styles.tile} title={value[1]===0? '': value[1]===1? 'X':'O'} onPress={() => {btnClick(1)}}/>
-                    <Button style={styles.tile} title={value[2]===0? '': value[2]===1? 'X':'O'} onPress={() => {btnClick(2)}}/>
-                </View>
-                <View>
-                    <Button style={styles.tile} title={value[3]===0? '': value[3]===1? 'X':'O'} onPress={() => {btnClick(3)}}/>
-                    <Button style={styles.tile} title={value[4]===0? '': value[4]===1? 'X':'O'} onPress={() => {btnClick(4)}}/>
-                    <Button style={styles.tile} title={value[5]===0? '': value[5]===1? 'X':'O'} onPress={() => {btnClick(5)}}/>
-                </View>
-                <View>
-                    <Button style={styles.tile} title={value[6]===0? '': value[6]===1? 'X':'O'} onPress={() => {btnClick(6)}}/>
-                    <Button style={styles.tile} title={value[7]===0? '': value[7]===1? 'X':'O'} onPress={() => {btnClick(7)}}/>
-                    <Button style={styles.tile} title={value[8]===0? '': value[8]===1? 'X':'O'} onPress={() => {btnClick(8)}}/>
-                </View>
+                <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
+                    <Rows data = {state.tableData} textStyle={styles.text}/>
+                </Table>
             </View>
             <Button style={styles.resetBtn} title={"RESET"} onPress={btnReset}/>
         </SafeAreaView>
@@ -138,17 +145,24 @@ const styles = StyleSheet.create({
         fontSize : 30,
         fontFamily : 'Gaegu-Bold',
     },
-    board: {
-        marginTop : 30,
-        marginLeft : 'auto',
-        marginRight : 'auto',
-        borderWidth : 1,
-        borderColor: 'black'
-    },
+    // board: {
+    //     marginTop : 30,
+    //     marginLeft : 'auto',
+    //     marginRight : 'auto',
+    //     borderWidth : 1,
+    //     borderColor: 'black'
+    // },
     resetBtn : {
         marginTop : 20,
         fontSize : 20,
         fontFamily: 'Gaegu-Bold',
-    }
+    },
+    tile : {
+        height: 90, backgroundColor: '#f1f8ff'
+    },
+    head: { height: 40, backgroundColor: '#f1f8ff' },
+    // board: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
+    text: { margin: 6 }
+
 });
 export default TicTacToe;
