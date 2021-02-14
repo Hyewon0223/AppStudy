@@ -3,7 +3,7 @@ import {SafeAreaView, StyleSheet, View, Text, Button} from 'react-native';
 import {Condition} from "./Condition";
 import AppLoading from 'expo-app-loading';
 import {useFonts} from 'expo-font';
-import {Row, Rows, Table} from "react-native-table-component";
+import {Rows, Table} from "react-native-table-component";
 
 const value = [0,0,0,0,0,0,0,0,0];
 const choose_X = [0,0,0,0,0,0,0,0,0];
@@ -23,15 +23,15 @@ export const TicTacToe = (props) => {
 
     const state = {
         tableData : [
-            [<Button style={styles.tile} title={value[0]===0? '': value[0]===1? 'X':'O'} onPress={() => {btnClick(0)}}/>,
-                <Button style={styles.tile} title={value[1]===0? '': value[1]===1? 'X':'O'} onPress={() => {btnClick(1)}}/>,
-                    <Button style={styles.tile} title={value[2]===0? '': value[2]===1? 'X':'O'} onPress={() => {btnClick(2)}}/>],
-            [<Button style={styles.tile} title={value[3]===0? '': value[3]===1? 'X':'O'} onPress={() => {btnClick(3)}}/>,
-                <Button style={styles.tile} title={value[4]===0? '': value[4]===1? 'X':'O'} onPress={() => {btnClick(4)}}/>,
-                    <Button style={styles.tile} title={value[5]===0? '': value[5]===1? 'X':'O'} onPress={() => {btnClick(5)}}/>],
-            [<Button style={styles.tile} title={value[6]===0? '': value[6]===1? 'X':'O'} onPress={() => {btnClick(6)}}/>,
-                <Button style={styles.tile} title={value[7]===0? '': value[7]===1? 'X':'O'} onPress={() => {btnClick(7)}}/>,
-                    <Button style={styles.tile} title={value[8]===0? '': value[8]===1? 'X':'O'} onPress={() => {btnClick(8)}}/>],
+            [<Button title={value[0]===0? '': value[0]===1? 'X':'O'} onPress={() => {btnClick(0)}}/>,
+                <Button title={value[1]===0? '': value[1]===1? 'X':'O'} onPress={() => {btnClick(1)}}/>,
+                    <Button title={value[2]===0? '': value[2]===1? 'X':'O'} onPress={() => {btnClick(2)}}/>],
+            [<Button title={value[3]===0? '': value[3]===1? 'X':'O'} onPress={() => {btnClick(3)}}/>,
+                <Button title={value[4]===0? '': value[4]===1? 'X':'O'} onPress={() => {btnClick(4)}}/>,
+                    <Button title={value[5]===0? '': value[5]===1? 'X':'O'} onPress={() => {btnClick(5)}}/>],
+            [<Button title={value[6]===0? '': value[6]===1? 'X':'O'} onPress={() => {btnClick(6)}}/>,
+                <Button title={value[7]===0? '': value[7]===1? 'X':'O'} onPress={() => {btnClick(7)}}/>,
+                    <Button title={value[8]===0? '': value[8]===1? 'X':'O'} onPress={() => {btnClick(8)}}/>],
         ]
     }
 
@@ -130,7 +130,7 @@ export const TicTacToe = (props) => {
             <Text style={styles.state}>{user.player}</Text>
             <View style={styles.board}>
                 <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
-                    <Rows data = {state.tableData} textStyle={styles.text}/>
+                    <Rows data = {state.tableData} style={styles.tableRow} textStyle={styles.text}/>
                 </Table>
             </View>
             <Button style={styles.resetBtn} title={"RESET"} onPress={btnReset}/>
@@ -145,24 +145,21 @@ const styles = StyleSheet.create({
         fontSize : 30,
         fontFamily : 'Gaegu-Bold',
     },
-    // board: {
-    //     marginTop : 30,
-    //     marginLeft : 'auto',
-    //     marginRight : 'auto',
-    //     borderWidth : 1,
-    //     borderColor: 'black'
-    // },
+    board : {
+        marginTop : 40,
+    },
+    tableRow : {
+        height : 150,
+        fontSize : 100,
+        fontFamily: 'Gaegu-Bold',
+    },
     resetBtn : {
         marginTop : 20,
         fontSize : 20,
         fontFamily: 'Gaegu-Bold',
     },
-    tile : {
-        height: 90, backgroundColor: '#f1f8ff'
-    },
-    head: { height: 40, backgroundColor: '#f1f8ff' },
-    // board: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
-    text: { margin: 6 }
+    text: {
 
+    },
 });
 export default TicTacToe;
