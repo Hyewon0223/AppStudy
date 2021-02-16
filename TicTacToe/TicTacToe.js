@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {SafeAreaView, StyleSheet, View, Text, Button} from 'react-native';
+import {SafeAreaView, StyleSheet, View, Text, Button, TouchableOpacity} from 'react-native';
 import {Condition} from "./Condition";
 import AppLoading from 'expo-app-loading';
 import {useFonts} from 'expo-font';
@@ -18,20 +18,20 @@ export const TicTacToe = (props) => {
     let finish = false;
 
     const makeBtn = (idx) => {
-        return <Button style={styles.tile} title={value[idx]===0? '': value[idx]===1? 'X':'O'} onPress={() => {btnClick(idx)}}/>
+        return <>
+        <TouchableOpacity onPress={() => {btnClick(idx)}}>
+            <View style={styles.tile}>
+                    <Text style={styles.text}>{value[idx]===0? '': value[idx]===1? 'X':'O'}</Text>
+            </View>
+        </TouchableOpacity>
+        </>
     }
 
     const state = {
         tableData : [
-            [<Button title={value[0]===0? '': value[0]===1? 'X':'O'} onPress={() => {btnClick(0)}}/>,
-                <Button title={value[1]===0? '': value[1]===1? 'X':'O'} onPress={() => {btnClick(1)}}/>,
-                    <Button title={value[2]===0? '': value[2]===1? 'X':'O'} onPress={() => {btnClick(2)}}/>],
-            [<Button title={value[3]===0? '': value[3]===1? 'X':'O'} onPress={() => {btnClick(3)}}/>,
-                <Button title={value[4]===0? '': value[4]===1? 'X':'O'} onPress={() => {btnClick(4)}}/>,
-                    <Button title={value[5]===0? '': value[5]===1? 'X':'O'} onPress={() => {btnClick(5)}}/>],
-            [<Button title={value[6]===0? '': value[6]===1? 'X':'O'} onPress={() => {btnClick(6)}}/>,
-                <Button title={value[7]===0? '': value[7]===1? 'X':'O'} onPress={() => {btnClick(7)}}/>,
-                    <Button title={value[8]===0? '': value[8]===1? 'X':'O'} onPress={() => {btnClick(8)}}/>],
+            [makeBtn(0),makeBtn(1),makeBtn(2)],
+            [makeBtn(3),makeBtn(4),makeBtn(5)],
+            [makeBtn(6),makeBtn(7),makeBtn(8)],
         ]
     }
 
@@ -133,7 +133,10 @@ export const TicTacToe = (props) => {
                     <Rows data = {state.tableData} style={styles.tableRow} textStyle={styles.text}/>
                 </Table>
             </View>
-            <Button style={styles.resetBtn} title={"RESET"} onPress={btnReset}/>
+            <TouchableOpacity style={styles.resetBtn} onPress={btnReset}>
+                <Text style={styles.btnText}>RESET</Text>
+            </TouchableOpacity>
+            {/*<Button style={styles.resetBtn} title={"RESET"} onPress={btnReset}/>*/}
         </SafeAreaView>
     </>
 }
@@ -143,7 +146,7 @@ const styles = StyleSheet.create({
         marginTop : 30,
         textAlign: 'center',
         fontSize : 30,
-        fontFamily : 'Gaegu-Bold',
+        fontFamily: 'Gaegu-Bold',
     },
     board : {
         marginTop : 40,
@@ -154,12 +157,25 @@ const styles = StyleSheet.create({
         fontFamily: 'Gaegu-Bold',
     },
     resetBtn : {
-        marginTop : 20,
-        fontSize : 20,
-        fontFamily: 'Gaegu-Bold',
+        flexDirection : 'row',
+        justifyContent: 'center',
+        marginTop : 40,
     },
-    text: {
-
+    btnText: {
+        fontSize : 30,
+        fontFamily: 'Gaegu-Bold',
+        color : 'skyblue',
+    },
+    tile : {
+        height : 150,
+        flexDirection : 'column',
+        justifyContent: 'center',
+    },
+    text : {
+        fontSize : 70,
+        fontFamily: 'Gaegu-Bold',
+        textAlign: 'center',
     },
 });
+
 export default TicTacToe;
