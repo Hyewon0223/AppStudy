@@ -1,10 +1,10 @@
 import React from 'react';
-import TicTacToe from "./TicTacToe/TicTacToe";
+import Weather from "./Weather/Weather";
 
 const App = () => {
     return (
         <>
-            <TicTacToe/>
+            <Weather/>
         </>
     );
 };
