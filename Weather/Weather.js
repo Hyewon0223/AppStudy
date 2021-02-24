@@ -1,11 +1,9 @@
-import React, {useState} from 'react';
-import {SafeAreaView, StyleSheet, View, Text, Button, TouchableOpacity} from 'react-native';
-import AppLoading from 'expo-app-loading';
 import React, {useState,useEffect} from 'react';
 import {SafeAreaView, StyleSheet, View, Text, Button, TouchableOpacity} from 'react-native';
 import AppLoading from 'expo-app-loading';
 import {useFonts} from 'expo-font';
-import axios from 'axios';
+import {OPENWEATHER_KEY} from '@env';
+import axios from "axios";
 
 export const Weather = () => {
     const [select, setSelect] = useState({
@@ -33,13 +31,13 @@ export const Weather = () => {
     }
 
     const searchWeather = () => {
-        const apiKey = process.env.REACT_APP_OPENWEATHER_KEY;
-        const URL = `http://api.openweathermap.org/data/2.5/weather?q=Seoul&appid=${apiKey}`;
+        const apiKey = OPENWEATHER_KEY;
+        const URL = `http://api.openweathermap.org/data/2.5/weather?q=${weather.loc}&appid=${apiKey}`;
 
         axios.get(URL).then(response => {
             response = response.data;
             console.log(response);
-            console.log(response.weather[0].description);
+            // console.log(response.weather[0].description);
 
             setWeather({
                 loc: response.name,
@@ -48,13 +46,7 @@ export const Weather = () => {
                 desc: response.weather[0].description,
                 icon: `http://openweathermap.com/img/w/${response.weather[0].icon}.png`,
             })
-
-            console.log('loc : ', weather.loc);
-            console.log('country : ', weather.country);
-            console.log('temp : ', weather.temp);
-            console.log('desc : ', weather.desc);
-            console.log('icon : ', weather.icon);
-
+            console.log(weather);
         });
     }
 
@@ -63,6 +55,10 @@ export const Weather = () => {
     }, []);
 
     return <>
-        <Text>Weather</Text>
+        <SafeAreaView>
+            <Text>Weather</Text>
+        </SafeAreaView>
     </>
 }
+
+export default Weather;
