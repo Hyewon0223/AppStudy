@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@expo-google-fonts/inter": "^0.1.0",
+    "@react-navigation/native": "^5.9.3",
     "async": "^3.2.0",
     "axios": "^0.21.1",
     "expo": "~40.0.0",
@@ -28,5 +29,11 @@
     "i18next": "^19.9.0",
     "react-native-dotenv": "^2.5.3"
   },
-  "private": true
+  "private": true,
+
+  "rnpm" : {
+    "assets" : [
+      "./assets/fonts"
+    ]
+  }
 }
