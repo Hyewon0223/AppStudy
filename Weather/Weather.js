@@ -1,5 +1,5 @@
 import React, {useState,useEffect} from 'react';
-import {SafeAreaView, StyleSheet, View, Text, Button, TouchableOpacity, TextInput,Image, TouchableHighlight} from 'react-native';
+import {SafeAreaView, StyleSheet, View, Text, Button, TouchableOpacity, TextInput,Image, TouchableHighlight, InputAccessoryView} from 'react-native';
 import AppLoading from 'expo-app-loading';
 import {useFonts} from 'expo-font';
 import {OPENWEATHER_KEY} from '@env';
@@ -8,35 +8,35 @@ import {OPENWEATHER_KEY} from '@env';
 import axios from "axios";
 
 export const Weather = () => {
+    let id = 1;
+
     const fontsLoaded = useFonts({
         'NotoSansKR-Black' : require('../assets/fonts/NotoSansKR-Black.otf'),
         'NotoSansKR-Bold' : require('../assets/fonts/NotoSansKR-Bold.otf'),
         'NotoSansKR-Regular' : require('../assets/fonts/NotoSansKR-Regular.otf'),
     });
-
     const [year, month, date] = [new Date().getFullYear(), new Date().getMonth()+1,new Date().getDate()];
     const today = `${year}년 ${month}월 ${date}일`
-
+    const [click, setClick] = useState('');
     const [search, setSearch] = useState('Seoul');
-
     const [weather, setWeather] = useState({
-        loc: 'Seoul',
-        country: 'KR',
-        temp: 0,
+        loc: '-',
+        country: '-',
+        temp: '-',
         desc: '-',
         icon: '-',
-        hum: 0,
-        feels_like: 0,
-        temp_max: 0,
-        temp_min: 0,
-        wind_speed: 0,
-        wind_deg: 0,
-
+        hum: '-',
+        feels_like: '-',
+        temp_max: '-',
+        temp_min: '-',
+        wind_speed: '-',
+        wind_deg: '-',
     });
 
-    const searchWeather = () => {
+    const searchWeather = (local) => {
         const apiKey = OPENWEATHER_KEY;
-        const URL = `http://api.openweathermap.org/data/2.5/weather?q=${weather.loc}&appid=${apiKey}`;
+        const URL = `http://api.openweathermap.org/data/2.5/weather?q=${local}&appid=${apiKey}`;
+        setClick(URL);
 
         axios.get(URL).then(response => {
             response = response.data;
@@ -45,53 +45,53 @@ export const Weather = () => {
             setWeather({
                 loc: response.name,
                 country: response.sys.country,
-                temp: Math.round(response.main.temp - 273.15),
-                // temp: response.main.temp,
+                temp: Math.round(response.main.temp - 273.15)+'℃',
                 desc: response.weather[0].description,
                 icon: `http://openweathermap.com/img/w/${response.weather[0].icon}.png`,
-                hum: response.main.humidity,
-                feels_like: Math.round(response.main.feels_like - 273.15),
-                temp_max: Math.round(response.main.temp_max - 273.15),
-                temp_min: Math.round(response.main.temp_min - 273.15),
-                wind_speed: response.wind.speed,
+                hum: response.main.humidity+'%',
+                feels_like: Math.round(response.main.feels_like - 273.15)+'℃',
+                temp_max: Math.round(response.main.temp_max - 273.15)+'℃',
+                temp_min: Math.round(response.main.temp_min - 273.15)+'℃',
+                wind_speed: response.wind.speed+'m/s',
                 wind_deg: response.wind.deg,
             })
         });
         return weather;
     }
 
-    const pressDel = () => {
-        setWeather({
-            loc : '',
-        })
-    }
-
     useEffect(() => {
-        searchWeather();
+        searchWeather(search);
     }, []);
 
     return <>
         <SafeAreaView style={{flexDirection:"column", alignItems:'center'}}>
+            <Text>{search}{click}</Text>
             <View style={weatherStyle.weatherInput}>
-                <TextInput style={weatherStyle.input} placeholder={"지역을 입력해주세요"} onChangeText={value => setWeather({loc : value})} defaultValue={weather.loc} />
-                <TouchableOpacity style={{marginLeft:10}}><Image style={{height:30,width:30,resizeMode:'contain'}} onClick={() => {searchWeather()}} source={require('./img/search.png')}/></TouchableOpacity>
+                <TextInput style={weatherStyle.input} inputAccessoryViewID={'Done'} placeholder={"지역을 입력해주세요"} onChangeText={value => setSearch(value)} defaultValue={search} />
+                {/*<InputAccessoryView nativeID={'Done'}>*/}
+                {/*    <Button*/}
+                {/*        onPress={() => {searchWeather()}}*/}
+                {/*        title="Done"*/}
+                {/*    />*/}
+                {/*</InputAccessoryView>*/}
+                <TouchableOpacity style={{marginLeft:10}}><Image style={{height:30,width:30,resizeMode:'contain'}} onPress={() => {searchWeather()}} source={require('./img/search.png')}/></TouchableOpacity>
             </View>
 
             <View style={weatherStyle.mainWeather}>
                 <Text style={{marginTop:13,fontFamily:'NotoSansKR-Regular',fontSize:20}}>{today}</Text>
                 <Text style={{fontFamily: 'NotoSansKR-Black',fontSize:40,fontStyle: 'italic'}}>{weather.loc}, {weather.country}</Text>
                 <Image style={{alignItems:'center',height:90,width:90,resizeMode:'contain'}} source={{uri: weather.icon}}/>
-                <Text style={{fontFamily:'NotoSansKR-Regular',fontSize:20}}>{weather.desc}</Text>
-                <Text style={{fontFamily:'NotoSansKR-Regular',fontSize:20}}>{weather.temp}℃</Text>
+                <Text style={weatherStyle.font1}>{weather.desc}</Text>
+                <Text style={weatherStyle.font1}>{weather.temp}</Text>
             </View>
 
             <View style={weatherStyle.temperatures}>
                 <Image style={{marginLeft:40,height:83,width:83,resizeMode:'contain'}} source={require('./img/thermometer.png')}/>
                 <View style={{marginLeft:20}}>
-                    <Text style={{fontFamily:'NotoSansKR-Bold',fontSize:15}}>습도 {weather.hum}%</Text>
-                    <Text style={{fontFamily:'NotoSansKR-Bold',fontSize:15}}>체감온도 {weather.feels_like}℃</Text>
-                    <Text style={{fontFamily:'NotoSansKR-Bold',fontSize:15}}>최고기온 {weather.temp_max}℃</Text>
-                    <Text style={{fontFamily:'NotoSansKR-Bold',fontSize:15}}>최저기온 {weather.temp_min}℃</Text>
+                    <Text style={weatherStyle.font2}>습도 {weather.hum}</Text>
+                    <Text style={weatherStyle.font2}>체감온도 {weather.feels_like}</Text>
+                    <Text style={weatherStyle.font2}>최고기온 {weather.temp_max}</Text>
+                    <Text style={weatherStyle.font2}>최저기온 {weather.temp_min}</Text>
                 </View>
 
             </View>
@@ -99,11 +99,12 @@ export const Weather = () => {
             <View style={weatherStyle.wind}>
                 <Image style={{marginLeft:40,height:62,width:83,resizeMode:'stretch'}} source={require('./img/wind.png')}/>
                 <View style={{marginLeft:20}}>
-                    <Text style={{fontFamily:'NotoSansKR-Bold',fontSize:15}}>풍향 {weather.wind_deg}</Text>
-                    <Text style={{fontFamily:'NotoSansKR-Bold',fontSize:15}}>풍속 {weather.wind_speed}m/s</Text>
+                    <Text style={weatherStyle.font2}>풍향 {weather.wind_deg}</Text>
+                    <Text style={weatherStyle.font2}>풍속 {weather.wind_speed}</Text>
                 </View>
             </View>
-            </SafeAreaView>
+        </SafeAreaView>
+
     </>
 }
 
@@ -113,7 +114,7 @@ const weatherStyle = StyleSheet.create({
     weatherInput : {
         flexDirection:"row",
         alignItems:'center',
-        // justifyContent: 'space-between',
+        justifyContent: 'center',
         width : 310,
         height : 45,
         borderColor : 'black',
@@ -163,6 +164,13 @@ const weatherStyle = StyleSheet.create({
         fontFamily : 'NotoSansKR-Bold',
         fontSize : 20,
         marginTop:15,
-
+    },
+    font1 : {
+        fontFamily:'NotoSansKR-Regular',
+        fontSize:20,
+    },
+    font2 : {
+        fontFamily:'NotoSansKR-Bold',
+        fontSize:15,
     },
 })
