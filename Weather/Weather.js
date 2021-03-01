@@ -3,8 +3,6 @@ import {SafeAreaView, StyleSheet, View, Text, Button, TouchableOpacity, TextInpu
 import AppLoading from 'expo-app-loading';
 import {useFonts} from 'expo-font';
 import {OPENWEATHER_KEY} from '@env';
-// import {Fonts} from '../Fonts'
-
 import axios from "axios";
 
 export const Weather = () => {
@@ -16,8 +14,7 @@ export const Weather = () => {
         'NotoSansKR-Regular' : require('../assets/fonts/NotoSansKR-Regular.otf'),
     });
     const [year, month, date] = [new Date().getFullYear(), new Date().getMonth()+1,new Date().getDate()];
-    const today = `${year}년 ${month}월 ${date}일`
-    const [click, setClick] = useState('');
+    const today = `${year}년 ${month}월 ${date}일`;
     const [search, setSearch] = useState('Seoul');
     const [weather, setWeather] = useState({
         loc: '-',
@@ -36,7 +33,6 @@ export const Weather = () => {
     const searchWeather = (local) => {
         const apiKey = OPENWEATHER_KEY;
         const URL = `http://api.openweathermap.org/data/2.5/weather?q=${local}&appid=${apiKey}`;
-        setClick(URL);
 
         axios.get(URL).then(response => {
             response = response.data;
@@ -65,16 +61,19 @@ export const Weather = () => {
 
     return <>
         <SafeAreaView style={{flexDirection:"column", alignItems:'center'}}>
-            <Text>{search}{click}</Text>
             <View style={weatherStyle.weatherInput}>
                 <TextInput style={weatherStyle.input} inputAccessoryViewID={'Done'} placeholder={"지역을 입력해주세요"} onChangeText={value => setSearch(value)} defaultValue={search} />
-                {/*<InputAccessoryView nativeID={'Done'}>*/}
-                {/*    <Button*/}
-                {/*        onPress={() => {searchWeather()}}*/}
-                {/*        title="Done"*/}
-                {/*    />*/}
-                {/*</InputAccessoryView>*/}
-                <TouchableOpacity style={{marginLeft:10}}><Image style={{height:30,width:30,resizeMode:'contain'}} onPress={() => {searchWeather()}} source={require('./img/search.png')}/></TouchableOpacity>
+                <InputAccessoryView nativeID={'Done'}>
+                    <View style={{backgroundColor : 'white'}}>
+                    <Button
+                        onPress={() => {searchWeather(search)}}
+                        title="Done"
+                    />
+                    </View>
+                </InputAccessoryView>
+                <TouchableOpacity style={weatherStyle.search} onPress={() => {searchWeather(search)}}>
+                    <Image style={{height:30,width:30,resizeMode:'contain'}} source={require('./img/search.png')}/>
+                </TouchableOpacity>
             </View>
 
             <View style={weatherStyle.mainWeather}>
@@ -127,6 +126,9 @@ const weatherStyle = StyleSheet.create({
         borderColor : 'black',
         fontFamily : 'NotoSansKR-Regular',
         fontSize : 30,
+    },
+    search : {
+        marginLeft:10,
     },
     mainWeather : {
         width : 312,
