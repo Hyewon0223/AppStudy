@@ -26,8 +26,9 @@ README: Yes
 ---
 
 ## 실행 화면
-
-[Weather%208df051c0bccd4407a8d09ea897bbe34e/weather_exe.gif](Weather%208df051c0bccd4407a8d09ea897bbe34e/Weather_exe.mp4)
+![weather_exe](https://user-images.githubusercontent.com/54919662/109576079-723d4300-7b36-11eb-8552-133ef89a8791.gif)
+![weather_exe](Weather%208df051c0bccd4407a8d09ea897bbe34e/Weather_exe.gif)
+[Weather%208df051c0bccd4407a8d09ea897bbe34e/weather_exe.gif](Weather%208df051c0bccd4407a8d09ea897bbe34e/Weather_exe.gif)
 
 1. 기본 화면
 
